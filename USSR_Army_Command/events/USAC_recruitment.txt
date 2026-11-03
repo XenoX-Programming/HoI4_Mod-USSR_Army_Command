@@ -1,0 +1,53 @@
+namespace = usac_recruit
+
+# Decline is the FIRST option so an unanswered timeout never recruits anyone.
+country_event = {
+	id = usac_recruit.1
+	title = usac_recruit.1.t
+	desc = usac_recruit.1.d
+	picture = GFX_report_event_soviet_tank_parade
+	is_triggered_only = yes
+	fire_only_once = yes
+	timeout_days = 30
+
+	option = {
+		name = usac_recruit.1.a
+		ai_chance = { base = 0 }
+	}
+	option = {
+		name = usac_recruit.1.b
+		ai_chance = { base = 100 }
+				recruit_character = USAC_tolbukhin
+				recruit_character = USAC_bagramyan
+				recruit_character = USAC_batov
+				recruit_character = USAC_sokolovsky
+				recruit_character = USAC_katukov
+				recruit_character = USAC_rotmistrov
+				recruit_character = USAC_bogdanov
+				recruit_character = USAC_kravchenko
+				recruit_character = USAC_badanov
+				recruit_character = USAC_krivoshein
+				recruit_character = USAC_beloborodov
+				recruit_character = USAC_panfilov
+				recruit_character = USAC_rodimtsev
+				recruit_character = USAC_kirponos
+				recruit_character = USAC_pavlov
+				recruit_character = USAC_petrov
+				recruit_character = USAC_maslennikov
+				recruit_character = USAC_khomenko
+				recruit_character = USAC_pukhov
+				recruit_character = USAC_shumilov
+				recruit_character = USAC_lyudnikov
+				recruit_character = USAC_glagolev
+				recruit_character = USAC_zhadov
+				recruit_character = USAC_kozlov
+				recruit_character = USAC_isakov
+				recruit_character = USAC_basistiy
+				recruit_character = USAC_panteleyev
+				recruit_character = USAC_andreyev
+				recruit_character = USAC_kholostyakov
+				recruit_character = USAC_alafuzov
+				recruit_character = USAC_kucherov
+				recruit_character = USAC_kharlamov
+	}
+}

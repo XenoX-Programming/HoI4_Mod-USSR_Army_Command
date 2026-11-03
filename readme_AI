@@ -1,0 +1,30 @@
+# readme_AI — handoff for the next chat
+
+Project: USSR Army Command (HOI4 mod). Repo root contains the mod folder `USSR_Army_Command/`, launcher descriptor `USSR_Army_Command.mod`, docs, and tools.
+
+## State
+- 32 commanders (24 army + 8 navy) generated from `/home/user/research/roster.json` via `tools/build_mod.py`.
+- Portraits: real photos in `/home/user/research/portrait_sources/`, processed by `tools/process_portraits.py` (ChromaGAN ONNX at `/home/user/.cache/hoi4-assets/chromagan.onnx`) into `USSR_Army_Command/gfx/leaders/SOV/*.dds`.
+- Static validation passes: `python tools/validate_mod.py`.
+- No in-game HOI4 testing was possible.
+
+## Key decisions
+- Event `usac_recruit.1` is triggered by `on_startup` only for human SOV. Decline is the FIRST option so timeout never recruits.
+- Characters are defined but not recruited in history files; only the accept option calls `recruit_character`.
+- IDs are namespaced `USAC_<slug>` to avoid vanilla collisions. Existing advisor-only SOV tokens (tributs/yumashev/kuznetsov) were excluded.
+- Stats/traits are gameplay abstractions. Biographies separate 1936 rank from later commands.
+
+## Regenerate
+```
+python tools/build_mod.py          # needs USAC_ROSTER or /home/user/research/roster.json
+/home/user/.venv/bin/python tools/process_portraits.py
+cd USSR_Army_Command/gfx/leaders/SOV && for f in *.png; do convert "$f" -define dds:compression=dxt5 "${f%.png}.dds"; done && rm *.png
+python tools/validate_mod.py
+```
+
+## Gotchas
+- `image_search` generic `results-N.*` files are overwritten by later calls; copy immediately.
+- Use `/home/user/.venv/bin/python` (Pillow, OpenCV, onnxruntime). System python lacks them.
+- ChromaGAN inference: input = Lab L resized 224×224 /255 replicated ×3; output ab = (y*2-1)*150; merge with original full-res L.
+- DDS export via ImageMagick `convert -define dds:compression=dxt5` (falls back to DXT1 for opaque images, which HOI4 accepts).
+- Do not generate replacement faces; user forbade unapproved photo generation.

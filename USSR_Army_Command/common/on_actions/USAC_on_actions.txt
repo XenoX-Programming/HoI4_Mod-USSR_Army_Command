@@ -1,0 +1,14 @@
+# Generated. Fires only for a human-controlled Soviet Union at game start.
+on_actions = {
+	on_startup = {
+		effect = {
+			every_country = {
+				limit = {
+					tag = SOV
+					is_ai = no
+				}
+				country_event = { id = usac_recruit.1 hours = 6 }
+			}
+		}
+	}
+}
